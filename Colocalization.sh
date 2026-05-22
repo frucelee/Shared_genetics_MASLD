@@ -3,11 +3,6 @@
 ##step1. Create test.R2 
 ##test.R2
 library(data.table)
-#library(magrittr) # needs to be run every time you start R and want to use %>%
-#library(dplyr)
-#library(tidyr)
-#library("tibble")
-#args <- commandArgs(trailingOnly=TRUE)
 args <- commandArgs(trailingOnly=TRUE)
 exp_path <- args[1]
 data1<-fread(exp_path,header=T)
@@ -24,9 +19,7 @@ data1$varbeta <- (data1$SE)^2
 data2$varbeta <- (data2$SE)^2
 input <- merge(data1, data2, by="SNP", all=FALSE, suffixes=c("_eqtl","_gwas"))
 library("coloc")
-#names(input )[names(input )=="V5"]="rs_id"
 result <- coloc.abf(dataset1=list(pvalues=input$pval_eqtl, snp=input$SNP, type="cc", s=N1, N=N2,MAF=input$eaf_eqtl), dataset2=list(pvalues=input$pval_gwas,MAF=input$eaf_gwas, snp=input$SNP, type="quant", N=N4))
-#library(dplyr)
 dd<-data.frame(t(data.frame(print(result[[1]]))))
 write.csv(dd,"123.csv",quote=F,row.names=F)
 
@@ -140,17 +133,10 @@ echo "Done."
 echo "Output files are in: $OUTPUT_DIR"
 
 ##step2. Perform the multi-trait colocalization analysis using hyprcoloc
-#library(susieR)
 library(data.table)
-#library(magrittr) # needs to be run every time you start R and want to use %>%
-#library(dplyr)
-#library(tidyr)
-#library("tibble")
-#args <- commandArgs(trailingOnly=TRUE)
 data21<-fread("/scratch/users/s/h/shifang/ldsc/data/raw/EBV/GCST90809825.h.tsv",header=T)
 data21$snpid<-paste(data21$chromosome,"_",data21$base_pair_location)
 data22<-fread("/scratch/users/s/h/shifang/ldsc/data/raw/EBV/finngen_R12_J10_ASTHMA_EXMORE",header=T)
-#names(data22)[names(data22)=="#chrom"]="chr"
 data22$snpid<-paste(data22$chrom,"_",data22$pos)
 names(data22)[names(data22)=="rsids"]="rsid"
 path<-setwd("/scratch/users/s/h/shifang/ldsc/data/coloc/tenk10k/eqtl1/sel")
@@ -160,10 +146,7 @@ for (j in c(1:length(fileNames))){
  data2<-data21
 data4<-data22
   data1<-fread(fileNames[j],header=T)
-#colnames(data1)<-c("CELL_ID","CELL_TYPE","snpid","SNPID","GENE","GENE_ID","CHR","POS","A1","A2","A2_FREQ_ONEK1K","A2_FREQ_HRC","SPEARMANS_RHO","S_STATISTICS","P_VALUE","Q_VALUE","FDR","RSQUARE","GENOTYPED","ROUND")
-#data1<-subset(data1,data1$ROUND=="1")
 data1$snpid<-paste(data1$CHR,"_",data1$POS)
-#names(data2)[names(data2)=="SNP"]="snpid"
 bb<-intersect(data1$snpid,data2$snpid)
 data3<-data2[data2$snpid%in%bb,]
 bb<-intersect(data3$snpid,data4$snpid)
@@ -190,7 +173,6 @@ rownames(ses)<-input1$rsid_eqtl
 library(hyprcoloc)
 traits <- c("GCST90728570","GCST90627749",j)
 rsid <- input1$rsid_eqtl
-# 方法A：将列表转换为矩阵
 betas <- as.matrix(betas)
 ses <- as.matrix(ses)
 
