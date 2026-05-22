@@ -173,17 +173,17 @@ rownames(ses)<-input1$rsid_eqtl
 library(hyprcoloc)
 traits <- c("GCST90728570","GCST90627749",j)
 rsid <- input1$rsid_eqtl
+# 方法A：将列表转换为矩阵
 betas <- as.matrix(betas)
 ses <- as.matrix(ses)
 
 result <- hyprcoloc(betas, ses, trait.names=traits, snp.id=rsid)
-library(dplyr)
-dd<-data.frame(t(data.frame( result$results)))
-dd$ID<-fileNames[j]
-if (dim(dd)[1] > 0) {
-coloc_sum<-rbind(dd,coloc_sum)
+result<-data.frame(data.frame(result$results))
+if (!is.null(result) && nrow(result) > 0) {
+    result$ID <- fileNames[j]
+coloc_sum <- bind_rows(coloc_sum, result)
 write.csv(coloc_sum,"hycoloc.csv")
+  }
 }
-}
-write.csv(coloc_sum,"hycoloc.csv")
+#coloc_sum<-rbind(dd,coloc_sum)loc_sum,"hycoloc.csv")
 
