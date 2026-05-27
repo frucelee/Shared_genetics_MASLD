@@ -1,14 +1,14 @@
 ##imputed gene expression using magic
 import scanpy as sc
-adata=sc.read_h5ad('Hepatocyte_control_MASLD.h5ad')
-import scanpy as sc
-import scanpy.external as sce
-top_genes_indices=["SUOX","CTCF"]
-adata_magic = sce.pp.magic(adata, name_list=["SUOX","CTCF"], knn=5)
-adata_magic.shape
 import numpy as np
 import pandas as pd
 import anndata as ad
+import scanpy.external as sce
+adata=sc.read_h5ad('Hepatocyte_control_MASLD.h5ad')
+top_genes_indices=["SUOX","CTCF"]
+adata_magic = sce.pp.magic(adata, name_list=["SUOX","CTCF"], knn=5)
+adata_magic.shape
+
 mat = adata_magic.X
 mat = mat.toarray() if hasattr(mat, "toarray") else np.asarray(mat)
 df = pd.DataFrame(
