@@ -1,7 +1,4 @@
 ## Code used for the colocalization analysis
-#Colocalization analysis between hypothyroidism and MASLD
-##step1. Create test.R2 
-##test.R2
 library(data.table)
 args <- commandArgs(trailingOnly=TRUE)
 exp_path <- args[1]
