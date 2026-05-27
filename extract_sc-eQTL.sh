@@ -1,4 +1,3 @@
-#Colocalization analysis between hypothyroidism and MASLD
 #!/bin/bash
 #
 #SBATCH --output=66_mpi.txt
@@ -64,5 +63,3 @@ rm -f "$TMP_GENE_LIST"
 
 echo "Done."
 echo "Output files are in: $OUTPUT_DIR"
-
-##step2. Perform the multi-trait colocalization analysis using hyprcoloc
