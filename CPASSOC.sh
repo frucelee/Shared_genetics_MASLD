@@ -1,5 +1,4 @@
 ##code used for performing cross-traits GWAS analysis
->>R
 library(data.table)
 library(dplyr)
 library(tibble)
@@ -116,6 +115,3 @@ EstimateGamma <- function (N = 1E4, SampleSize, CorrMatrix, correct = 1, startCu
 x=SHet(X=data3,SampleSize=SampleSize,CorrMatrix=CorrMatrix)#correct=1,isAllpossible=T
 SHet=as.matrix(x)
 write.table(SHet,'/scratch/users/s/h/shifang/ldsc/mtag/data/CPASSOC/CPASSOC_GCST90627749_GCST90728570.tsv', quote = FALSE,row.names = T,sep="\t")
-
-##clump the SNP
-
