@@ -54,28 +54,6 @@ p2 <- p1 + theme(legend.position = 'none') +
                   size = 5,box.padding = unit(0.5, 'lines'), segment.color = 'black', show.legend = T)
 p2
 
-##imputed gene expression using magic
-##Step1. Perform MAGIC
-import scanpy as sc
-adata=sc.read_h5ad('Hepatocyte_control_MASLD.h5ad')
-import scanpy as sc
-import scanpy.external as sce
-top_genes_indices=["SUOX","CTCF"]
-adata_magic = sce.pp.magic(adata, name_list=["SUOX","CTCF"], knn=5)
-adata_magic.shape
-import numpy as np
-import pandas as pd
-import anndata as ad
-mat = adata_magic.X
-mat = mat.toarray() if hasattr(mat, "toarray") else np.asarray(mat)
-df = pd.DataFrame(
-mat,
-index=adata_magic.obs_names,
-columns=adata_magic.var_names
-)
-df_out = df.copy()
-df_out["group"] = adata_magic.obs["group"].values
-df_out.to_csv("magic_with_meta.tsv", sep="\t")
 
 ##Step2. Vislizat in R
 mydata<-read.table("magic_with_meta.tsv",header=T)
