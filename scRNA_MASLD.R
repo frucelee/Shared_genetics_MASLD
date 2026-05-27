@@ -1,24 +1,27 @@
 ##Code for the scRNA-seq analysis
 ##Virtual knockout
-#In R
-data<-qread("E:\\Paper\\scRNA\\data\\CD4_subset_all.qs")
-data@meta.data$condition
-seurat_obj <- subset(data, subset = condition == "NC")
+data = readRDS("E:\\MASLD_snRNA_seq_seurat_v4.rds")
+meta<-scRNA@meta.data
+scRNA@meta.data$group <- plyr::mapvalues(
+  x = scRNA@meta.data$Disease_group,
+  from = c("aMASH", "control", "eMASH", "MASL"),
+  to = c("MASLD", "control", "MASLD", "MASLD"))
+scRNA$celltype.stim <- paste(scRNA$Cell_type_broad, scRNA$group, sep = "_")
+seurat_obj<-subset(scRNA,celltype.stim==c("Hepatocyte_MASLD"))
 seurat_obj
 set.seed(42)
 count_matrix <- GetAssayData(seurat_obj,assay="RNA",slot="counts")
-target_gene_name="ENSBTAG00000015899"
+target_gene_name="SUOX"
 seurat_obj <- FindVariableFeatures(object=seurat_obj, selection.method="vst", nfeatures=10000)
 high_variable_genes <- VariableFeatures(seurat_obj)
 input_data <- as.data.frame(count_matrix[unique(c(target_gene_name, high_variable_genes)),])
 library(scTenifoldNet.lite)
 library(data.table)
-ko_analysis_result <-scTenifoldKnk(countMatrix = input_data, gKO = "ENSBTAG00000015899", qc_minLSize = 0, fast = TRUE)
+ko_analysis_result <-scTenifoldKnk(countMatrix = input_data, gKO = "SUOX", qc_minLSize = 0, fast = TRUE)
 diff_regulation_df <- ko_analysis_result$diffRegulation
-diff_regulation_df <- diff_regulation_df[diff_regulation_df$gene != c("DNAJC13"), ]
-#write.table(significant_diff_table, file="CD4_LPS_ENSBTAG00000015899.txt", sep="\t", quote=F, row.names=F)
+#write.table(significant_diff_table, file="SUOX_KO.txt", sep="\t", quote=F, row.names=F)
+df <- diff_regulation_df[diff_regulation_df$gene != c("SUOX"), ]
 ##KO
-df<-read.table("SUOX_KO.txt",header=T)
 df[which(df$p.adj < 0.05),'sig'] <- 'sig'
 df[which(df$p.adj>= 0.05),'sig'] <- 'None'
 df <- df %>%
@@ -57,7 +60,7 @@ p2
 ##Visualizing imputed gene expression
 mydata<-read.table("magic_with_meta.tsv",header=T)
 library(ggpointdensity)
-ggplot(data=mydata, aes(x=mydata$PPP5C, y=mydata$ETS1)) +
+ggplot(data=mydata, aes(x=mydata$SUOX, y=mydata$CTCF)) +
   geom_hex(bins = 80) +   
   scale_fill_viridis_c() 
 cor.test(mydata$PPP5C,mydata$ETS1,method="spearman")
