@@ -54,8 +54,7 @@ p2 <- p1 + theme(legend.position = 'none') +
                   size = 5,box.padding = unit(0.5, 'lines'), segment.color = 'black', show.legend = T)
 p2
 
-
-##Step2. Vislizat in R
+##Visualizing imputed gene expression
 mydata<-read.table("magic_with_meta.tsv",header=T)
 library(ggpointdensity)
 ggplot(data=mydata, aes(x=mydata$PPP5C, y=mydata$ETS1)) +
