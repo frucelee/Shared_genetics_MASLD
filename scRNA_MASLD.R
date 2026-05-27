@@ -1,5 +1,10 @@
 ##Code for the scRNA-seq analysis
-##Virtual knockout
+library(Seurat)
+library(ggplot2)
+library(cowplot)
+library(dplyr)
+#library(ggunchull)
+library(tidydr)
 data = readRDS("E:\\MASLD_snRNA_seq_seurat_v4.rds")
 meta<-scRNA@meta.data
 scRNA@meta.data$group <- plyr::mapvalues(
