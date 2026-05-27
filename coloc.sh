@@ -1,4 +1,3 @@
-##step2. Perform the Colocalization analysis 
 #!/bin/bash
 #
 #SBATCH --output=66_mpi.txt
