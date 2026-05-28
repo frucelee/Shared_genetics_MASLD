@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#SBATCH --output=66_mpi.txt
+#SBATCH --output=coloc.log
 #SBATCH --time=2:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
@@ -17,22 +17,22 @@ while read -r P1 P2 P3 P4 P5 P6 P7 P8 P9; do
 
     #
     awk -v chr="$P4" -v start="$START" -v end="$END" '$2 == chr && $3 >= start && $3 <= end' \
-        "/scratch/users/s/h/shifang/ldsc/data/used/$P2" > 123.txt
+        "/scratch/users/s/h/shifang/ldsc/data/used/$P2" > tmp1.txt
 
     awk -v chr="$P4" -v start="$START" -v end="$END" '$2 == chr && $3 >= start && $3 <= end' \
-        "/scratch/users/s/h/shifang/ldsc/data/used/$P3" > 456.txt
+        "/scratch/users/s/h/shifang/ldsc/data/used/$P3" > tmp2.txt
 
     # fine-mapping
-    Rscript --vanilla test.R2 123.txt 456.txt "$P6" "$P7" "$P8" "$P9"
+    Rscript --vanilla coloc.R tmp1.txt tmp2.txt "$P6" "$P7" "$P8" "$P9"
 
     #
-    if [[ -f "123.csv" ]]; then
-        mv 123.csv "${OUT_PREFIX}.csv"
+    if [[ -f "tmp.csv" ]]; then
+        mv tmp.csv "${OUT_PREFIX}.csv"
     else
-        echo "Warning: 123.csv not found for $OUT_PREFIX"
+        echo "Warning: tmp.csv not found for $OUT_PREFIX"
     fi
 
     #
-    rm -f 123.txt 456.txt
+    rm -f tmp1.txt tmp2.txt
 
 done <ID
