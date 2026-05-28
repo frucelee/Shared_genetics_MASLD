@@ -5,8 +5,8 @@ data21$snpid<-paste(data21$chromosome,"_",data21$base_pair_location)
 data22<-fread("/scratch/users/s/h/shifang/ldsc/data/raw/EBV/finngen_R12_J10_ASTHMA_EXMORE",header=T)
 data22$snpid<-paste(data22$chrom,"_",data22$pos)
 names(data22)[names(data22)=="rsids"]="rsid"
-path<-setwd("/scratch/users/s/h/shifang/ldsc/data/coloc/tenk10k/eqtl1/sel")
-fileNames = list.files(path="/scratch/users/s/h/shifang/ldsc/data/coloc/tenk10k/eqtl1/sel",pattern=".txt", full.names = TRUE)
+path<-setwd("/scratch/users/s/h/shifang/ldsc/data/coloc/tenk10k/tenk10K_eQTL_sel")
+fileNames = list.files(path="/scratch/users/s/h/shifang/ldsc/data/coloc/tenk10k/tenk10K_eQTL_sel",pattern=".txt", full.names = TRUE)
 coloc_sum <- c()
 for (j in c(1:length(fileNames))){
  data2<-data21
