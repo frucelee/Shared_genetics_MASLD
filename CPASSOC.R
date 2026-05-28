@@ -1,4 +1,3 @@
-##code used for performing cross-traits GWAS analysis
 library(data.table)
 library(dplyr)
 library(tibble)
