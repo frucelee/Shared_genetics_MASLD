@@ -1,12 +1,12 @@
 #!/bin/bash
 library(data.table)
-data21<-fread("/scratch/users/s/h/shifang/ldsc/data/raw/EBV/GCST90809825.h.tsv",header=T)
+data21<-fread("/scratch/users/s/h/shifang/data/GCST90728570_modified.tsv",header=T)
 data21$snpid<-paste(data21$chromosome,"_",data21$base_pair_location)
-data22<-fread("/scratch/users/s/h/shifang/ldsc/data/raw/EBV/finngen_R12_J10_ASTHMA_EXMORE",header=T)
+data22<-fread("/scratch/users/s/h/shifang/data/GCST90627749_modified.tsv",header=T)
 data22$snpid<-paste(data22$chrom,"_",data22$pos)
 names(data22)[names(data22)=="rsids"]="rsid"
-path<-setwd("/scratch/users/s/h/shifang/ldsc/data/coloc/tenk10k/tenk10K_eQTL_sel")
-fileNames = list.files(path="/scratch/users/s/h/shifang/ldsc/data/coloc/tenk10k/tenk10K_eQTL_sel",pattern=".txt", full.names = TRUE)
+path<-setwd("/scratch/users/s/h/shifang/coloc/tenk10k/tenk10K_eQTL_sel")
+fileNames = list.files(path="/scratch/users/s/h/shifang/coloc/tenk10k/tenk10K_eQTL_sel",pattern=".txt", full.names = TRUE)
 coloc_sum <- c()
 for (j in c(1:length(fileNames))){
  data2<-data21
@@ -39,10 +39,8 @@ rownames(ses)<-input1$rsid_eqtl
 library(hyprcoloc)
 traits <- c("GCST90728570","GCST90627749",j)
 rsid <- input1$rsid_eqtl
-# 方法A：将列表转换为矩阵
 betas <- as.matrix(betas)
 ses <- as.matrix(ses)
-
 result <- hyprcoloc(betas, ses, trait.names=traits, snp.id=rsid)
 result<-data.frame(data.frame(result$results))
 if (!is.null(result) && nrow(result) > 0) {
@@ -51,4 +49,3 @@ coloc_sum <- bind_rows(coloc_sum, result)
 write.csv(coloc_sum,"hycoloc.csv")
   }
 }
-#coloc_sum<-rbind(dd,coloc_sum)loc_sum,"hycoloc.csv")
