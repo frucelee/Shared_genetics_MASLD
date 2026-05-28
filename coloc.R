@@ -1,4 +1,3 @@
-## Code used for the colocalization analysis
 library(data.table)
 args <- commandArgs(trailingOnly=TRUE)
 exp_path <- args[1]
@@ -17,8 +16,8 @@ data2$varbeta <- (data2$SE)^2
 input <- merge(data1, data2, by="SNP", all=FALSE, suffixes=c("_eqtl","_gwas"))
 library("coloc")
 result <- coloc.abf(dataset1=list(pvalues=input$pval_eqtl, snp=input$SNP, type="cc", s=N1, N=N2,MAF=input$eaf_eqtl), dataset2=list(pvalues=input$pval_gwas,MAF=input$eaf_gwas, snp=input$SNP, type="quant", N=N4))
-dd<-data.frame(t(data.frame(print(result[[1]]))))
-write.csv(dd,"123.csv",quote=F,row.names=F)
+final<-data.frame(t(data.frame(print(result[[1]]))))
+write.csv(final,"tmp.csv",quote=F,row.names=F)
 
 
 
