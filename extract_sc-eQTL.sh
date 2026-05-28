@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#SBATCH --output=66_mpi.txt
+#SBATCH --output=extract_sc-eQTL.log
 #SBATCH --time=3:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
@@ -8,9 +8,9 @@
 
 set -euo pipefail
 
-GENE_LIST="cc"
+GENE_LIST="gene_id_sel"
 INPUT_PATTERN="*tsv"
-OUTPUT_DIR="eqtl1"
+OUTPUT_DIR="tenk10K_eQTL_sel"
 GENE_COL=18
 
 if [[ ! -f "$GENE_LIST" ]]; then
