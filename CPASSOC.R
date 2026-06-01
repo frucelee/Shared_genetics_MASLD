@@ -1,10 +1,10 @@
 library(data.table)
 library(dplyr)
 library(tibble)
-data3<-fread("GCST90627749_GCST90728570.tsv",header=T,sep="\t",check.names = FALSE)
-data3<-data3%>%distinct(snpid,.keep_all=T)
-data3<-data.frame(column_to_rownames(data3, var = "snpid"))
-CorrMatrix=cor(data3)
+mydata<-fread("GCST90627749_GCST90728570.tsv",header=T,sep="\t",check.names = FALSE)
+mydata<-mydata%>%distinct(snpid,.keep_all=T)
+mydata<-data.frame(column_to_rownames(mydata, var = "snpid"))
+CorrMatrix=cor(mydata)
 SampleSize=c(1786062,122644)
 library("MASS")
 library("Matrix")
@@ -109,8 +109,8 @@ EstimateGamma <- function (N = 1E4, SampleSize, CorrMatrix, correct = 1, startCu
         para = c(k,theta,a);
         return(para);
 }
-#shom=SHom(X=data3,SampleSize=SampleSize,CorrMatrix=CorrMatrix)
+#shom=SHom(X=mydata,SampleSize=SampleSize,CorrMatrix=CorrMatrix)
 #shom=as.matrix(shom)
-x=SHet(X=data3,SampleSize=SampleSize,CorrMatrix=CorrMatrix)#correct=1,isAllpossible=T
+x=SHet(X=mydata,SampleSize=SampleSize,CorrMatrix=CorrMatrix)#correct=1,isAllpossible=T
 SHet=as.matrix(x)
 write.table(SHet,'/scratch/users/s/h/shifang/ldsc/mtag/data/CPASSOC/CPASSOC_GCST90627749_GCST90728570.tsv', quote = FALSE,row.names = T,sep="\t")
