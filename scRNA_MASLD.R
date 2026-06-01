@@ -6,10 +6,6 @@ library(dplyr)
 library(tidydr)
 data = readRDS("E:\\MASLD_snRNA_seq_seurat_v4.rds")
 meta<-scRNA@meta.data
-scRNA@meta.data$group <- plyr::mapvalues(
-  x = scRNA@meta.data$Disease_group,
-  from = c("aMASH", "control", "eMASH", "MASL"),
-  to = c("MASLD", "control", "MASLD", "MASLD"))
 scRNA$celltype.stim <- paste(scRNA$Cell_type_broad, scRNA$group, sep = "_")
 seurat_obj<-subset(scRNA,celltype.stim==c("Hepatocyte_MASLD"))
 seurat_obj
@@ -26,8 +22,8 @@ diff_regulation_df <- ko_analysis_result$diffRegulation
 #write.table(significant_diff_table, file="SUOX_KO.txt", sep="\t", quote=F, row.names=F)
 df <- diff_regulation_df[diff_regulation_df$gene != c("SUOX"), ]
 ##KO
-df[which(df$p.adj < 0.05),'sig'] <- 'sig'
-df[which(df$p.adj>= 0.05),'sig'] <- 'None'
+df[which(df$p.adj < 0.05),'sig'] <- 'Significant'
+df[which(df$p.adj>= 0.05),'sig'] <- 'No Significant'
 df <- df %>%
   mutate(log10p = -log10(p.adj),
          is_zero = (p.adj == 0))
@@ -67,4 +63,4 @@ library(ggpointdensity)
 ggplot(data=mydata, aes(x=mydata$SUOX, y=mydata$CTCF)) +
   geom_hex(bins = 80) +   
   scale_fill_viridis_c() 
-cor.test(mydata$PPP5C,mydata$ETS1,method="spearman")
+cor.test(mydata$SUOX,mydata$CTCF,method="spearman")
