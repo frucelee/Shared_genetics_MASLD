@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 library(data.table)
 args <- commandArgs(trailingOnly=TRUE)
 exp_path <- args[1]
