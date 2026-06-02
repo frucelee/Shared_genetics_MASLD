@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #SBATCH --output=extract_sc-eQTL.log
-#SBATCH --time=3:00:00
+#SBATCH --time=10:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem-per-cpu=20000
