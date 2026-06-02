@@ -25,29 +25,12 @@ df <- diff_regulation_df[diff_regulation_df$gene != c("SUOX"), ]
 ##KO
 df[which(df$p.adj < 0.05),'sig'] <- 'Significant'
 df[which(df$p.adj>= 0.05),'sig'] <- 'No Significant'
-df <- df %>%
-  mutate(log10p = -log10(p.adj),
-         is_zero = (p.adj == 0))
-
-max_finite <- max(df$log10p[is.finite(df$log10p)], na.rm = TRUE)
-df$log10p[is.infinite(df$log10p)] <- max_finite * 1.2  
-p1<-ggplot(df, aes(x = log10(FC), y = log10p)) +
-  geom_point(aes(color = is_zero, shape = is_zero), size = 2) +
-  scale_color_manual(values = c("black", "red"), 
-                     labels = c("p.adj > 0", "p.adj = 0")) +
-  scale_shape_manual(values = c(16, 17), 
-                     labels = c("p.adj > 0", "p.adj = 0")) +
-  labs(x = "log10(Fold Change)", y = "-log10(adjusted p-value)",
-       color = "Significance", shape = "Significance") +
-  theme_bw() +
-  geom_text_repel(data = subset(df, is_zero), aes(label = gene), 
-                  nudge_y = 0.2, nudge_x = 0.1)  
 p1 <- ggplot(df, aes(x = log10(FC), y = -log10(p.adj), color = sig)) +
   geom_point(alpha = 0.6, size = 1) +
   scale_colour_manual(values = c("#3B7EA1","#7A7A7A"), limits = c('sig', 'None')) +
   theme(panel.grid = element_blank(), panel.background = element_rect(color = 'black', fill = 'transparent'), plot.title = element_text(hjust = 0.5)) +
   theme(legend.key = element_rect(fill = 'transparent'), legend.background = element_rect(fill = 'transparent'), legend.position = c(0.9, 0.93))+
-  labs(x = 'beita', y = 'log10 p-value', color = '', title = '')+theme_bw() +theme(axis.line = element_line(colour = "black"))+theme(panel.border = element_blank())+ theme(panel.grid =element_blank())+ geom_hline(yintercept = 1.30103,linetype="dashed")
+  labs(x = 'log10(FC)', y = '-log10(p.adj)', color = '', title = '')+theme_bw() +theme(axis.line = element_line(colour = "black"))+theme(panel.border = element_blank())+ theme(panel.grid =element_blank())+ geom_hline(yintercept = 1.30103,linetype="dashed")
 
 p1
 library(ggrepel)
