@@ -113,4 +113,4 @@ EstimateGamma <- function (N = 1E4, SampleSize, CorrMatrix, correct = 1, startCu
 #shom=as.matrix(shom)
 x=SHet(X=mydata,SampleSize=SampleSize,CorrMatrix=CorrMatrix)#correct=1,isAllpossible=T
 SHet=as.matrix(x)
-write.table(SHet,'/scratch/users/s/h/shifang/ldsc/mtag/data/CPASSOC/CPASSOC_GCST90627749_GCST90728570.tsv', quote = FALSE,row.names = T,sep="\t")
+write.table(SHet,'/scratch/users/s/h/shifang/ldsc/mtag/data/CPASSOC/CPASSOC_gwas_GCST90627749_GCST90728570.tsv', quote = FALSE,row.names = T,sep="\t")
