@@ -10,8 +10,8 @@ gwas2 <- fread(gwas2_path, header = TRUE)
 gwas1 <- gwas1[, .(MarkerID, beta, standard_error)]
 setnames(gwas1, c("beta", "standard_error"), c("beta_gwas1", "se_gwas1"))
 
-gwas2 <- gwas2[, .(MarkerID, beta, sebeta)]
-setnames(gwas2, c("beta", "sebeta"), c("beta_gwas2", "se_gwas2"))
+gwas2 <- gwas2[, .(MarkerID, beta, standard_error)]
+setnames(gwas2, c("beta", "standard_error"), c("beta_gwas2", "se_gwas2"))
 
 gwas1 <- gwas1[se_gwas1 > 0 & se_gwas1 < 1]
 gwas2 <- gwas2[se_gwas2 > 0 & se_gwas2 < 1]
