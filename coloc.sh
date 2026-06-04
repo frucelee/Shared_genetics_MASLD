@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#SBATCH --output=coloc.log
+#SBATCH --output=disease_coloc.log
 #SBATCH --time=5:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
