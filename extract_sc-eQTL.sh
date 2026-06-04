@@ -8,7 +8,7 @@
 
 set -euo pipefail
 
-GENE_LIST="gene_id_sel"
+GENE_LIST="gene_id_selected"
 INPUT_PATTERN="*tsv"
 OUTPUT_DIR="tenk10K_eQTL_sel"
 GENE_COL=18
