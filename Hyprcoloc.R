@@ -81,8 +81,6 @@ for (eqtl_file in eqtl_files) {
   }
 }
 
-# -----------------------------------------------------------------------------
-# -----------------------------------------------------------------------------
 output_file <- "hycoloc_all.csv"
 if (nrow(coloc_results) > 0) {
   fwrite(coloc_results, output_file)
