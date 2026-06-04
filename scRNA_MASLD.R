@@ -3,7 +3,6 @@ library(Seurat)
 library(ggplot2)
 library(cowplot)
 library(dplyr)
-#library(ggunchull)
 library(tidydr)
 data = readRDS("E:\\MASLD_snRNA_seq_seurat_v4.rds")
 meta<-scRNA@meta.data
