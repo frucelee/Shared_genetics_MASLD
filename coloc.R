@@ -14,9 +14,9 @@ colnames(data1)=c("SNP","hg18","bq","A2","A1", "beta","pval", "se", "eaf", "n", 
 colnames(data2)=c("SNP","hg18","bq","A2","A1", "beta","pval", "se", "eaf", "n", "z" )
 #data1$varbeta <- (data1$SE)^2
 #data2$varbeta <- (data2$SE)^2
-input <- merge(data1, data2, by="SNP", all=FALSE, suffixes=c("_eqtl","_gwas"))
+input <- merge(data1, data2, by="SNP", all=FALSE, suffixes=c("_gwas1","_gwas2"))
 library("coloc")
-result <- coloc.abf(dataset1=list(pvalues=input$pval_eqtl, snp=input$SNP, type="cc", s=N1, N=N2,MAF=input$eaf_eqtl), dataset2=list(pvalues=input$pval_gwas,MAF=input$eaf_gwas, snp=input$SNP, type="quant", N=N4))
+result <- coloc.abf(dataset1=list(pvalues=input$pval_gwas1, snp=input$SNP, type="cc", s=N1, N=N2,MAF=input$eaf_gwas1), dataset2=list(pvalues=input$pval_gwas2,MAF=input$eaf_gwas2, snp=input$SNP, type="quant", N=N4))
 final<-data.frame(t(data.frame(print(result[[1]]))))
 write.csv(final,"tmp.csv",quote=F,row.names=F)
 
